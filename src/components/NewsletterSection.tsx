@@ -16,30 +16,30 @@ export const NewsletterSection = () => {
   return (
     <HeadlessNewsletter>
       {(logic) => (
-        <section className="bg-muted/30 py-16 border-y">
-          <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <section className="bg-gradient-to-br from-primary via-primary to-accent py-20">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             {logic.success ? (
-              <div className="space-y-4">
+              <div className="space-y-6">
                 <div className="flex justify-center">
-                  <div className="bg-primary/10 rounded-full p-3">
-                    <Mail className="h-8 w-8 text-primary" />
+                  <div className="bg-white/20 rounded-full p-4">
+                    <Mail className="h-12 w-12 text-white" />
                   </div>
                 </div>
-                <h3 className="text-2xl font-bold text-foreground">
-                  Thanks for subscribing!
+                <h3 className="text-4xl font-black text-white">
+                  ¡GRACIAS POR SUSCRIBIRTE!
                 </h3>
-                <p className="text-muted-foreground">
-                  You'll receive our best offers and promotions soon.
+                <p className="text-xl text-white/90">
+                  Pronto recibirás nuestras mejores ofertas y promociones exclusivas.
                 </p>
               </div>
             ) : (
-              <div className="space-y-6">
-                <div className="space-y-2">
-                  <h3 className="text-2xl font-bold text-foreground">
-                    Want promotional emails?
+              <div className="space-y-8">
+                <div className="space-y-3">
+                  <h3 className="text-4xl md:text-5xl font-black text-white leading-tight">
+                    ¿QUIERES OFERTAS EXCLUSIVAS?
                   </h3>
-                  <p className="text-lg text-muted-foreground">
-                    Subscribe to our newsletter and get exclusive offers
+                  <p className="text-xl text-white/90">
+                    Suscríbete y recibe un 10% de descuento en tu primera compra
                   </p>
                 </div>
                 
@@ -48,28 +48,28 @@ export const NewsletterSection = () => {
                     e.preventDefault();
                     logic.handleSubscribe();
                   }}
-                  className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+                  className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto"
                 >
                   <Input 
                     type="email"
-                    placeholder="your@email.com"
+                    placeholder="tu@email.com"
                     value={logic.email}
                     onChange={(e) => logic.setEmail(e.target.value)}
                     disabled={logic.isSubmitting}
-                    className="flex-1"
+                    className="flex-1 h-14 text-lg bg-white/10 border-white/30 text-white placeholder:text-white/60 focus:bg-white/20"
                     required
                   />
                   <Button 
                     type="submit"
                     disabled={logic.isSubmitting}
-                    className="sm:w-auto"
+                    className="sm:w-auto h-14 px-8 bg-white text-black hover:bg-white/90 font-black text-lg"
                   >
-                    {logic.isSubmitting ? 'Subscribing...' : 'Subscribe'}
+                    {logic.isSubmitting ? 'SUSCRIBIENDO...' : 'SUSCRIBIRME'}
                   </Button>
                 </form>
                 
                 {logic.error && (
-                  <p className="text-sm text-destructive">
+                  <p className="text-sm text-white bg-destructive/20 p-3 rounded-lg">
                     {logic.error}
                   </p>
                 )}

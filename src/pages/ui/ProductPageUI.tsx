@@ -83,12 +83,12 @@ export const ProductPageUI = ({ logic }: ProductPageUIProps) => {
     return (
       <EcommerceTemplate>
         <div className="text-center py-16">
-            <h1 className="text-4xl font-bold mb-4">Product not found</h1>
-            <p className="text-muted-foreground mb-8">The product you're looking for doesn't exist or has been deleted.</p>
-            <Button asChild>
+            <h1 className="text-4xl font-black mb-4">PRODUCTO NO ENCONTRADO</h1>
+            <p className="text-muted-foreground mb-8">El producto que buscas no existe o ha sido eliminado.</p>
+            <Button asChild className="font-bold">
               <Link to="/">
                 <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to home
+                VOLVER AL INICIO
               </Link>
             </Button>
         </div>
@@ -113,24 +113,29 @@ export const ProductPageUI = ({ logic }: ProductPageUIProps) => {
         {/* Product Details */}
         <div className="space-y-6">
           <div>
-            <h1 className="text-3xl font-bold">{logic.product.title}</h1>
-            <div className="flex items-center gap-4 mt-2">
-              <span className="text-2xl font-bold">
+            <h1 className="text-4xl font-black leading-tight">{logic.product.title}</h1>
+            <div className="flex items-center gap-4 mt-4">
+              <span className="text-3xl font-black text-foreground">
                 {logic.formatMoney(logic.currentPrice)}
               </span>
               {logic.currentCompareAt && logic.currentCompareAt > logic.currentPrice && (
-                <span className="text-lg text-muted-foreground line-through">
-                  {logic.formatMoney(logic.currentCompareAt)}
-                </span>
+                <>
+                  <span className="text-xl text-muted-foreground line-through">
+                    {logic.formatMoney(logic.currentCompareAt)}
+                  </span>
+                  <span className="bg-destructive text-destructive-foreground text-sm font-bold px-3 py-1.5 rounded-full">
+                    {Math.round(((logic.currentCompareAt - logic.currentPrice) / logic.currentCompareAt) * 100)}% OFF
+                  </span>
+                </>
               )}
             </div>
           </div>
 
           {logic.product.description && (
             <div>
-              <h3 className="font-semibold mb-2">Description</h3>
+              <h3 className="font-black text-lg mb-3">DESCRIPCIÓN</h3>
               <div 
-                className="text-muted-foreground prose prose-sm max-w-none"
+                className="text-muted-foreground prose prose-sm max-w-none leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: logic.product.description }}
               />
             </div>
@@ -141,7 +146,7 @@ export const ProductPageUI = ({ logic }: ProductPageUIProps) => {
             <div className="space-y-4">
               {logic.product.options.map((option) => (
                 <div key={option.name}>
-                  <Label className="text-base font-medium">{option.name}</Label>
+                  <Label className="text-base font-bold mb-3 block">{option.name}</Label>
                   <div className="flex flex-wrap gap-2 mt-2">
                     {option.values.map((value) => {
                       const isSelected = logic.selected[option.name] === value
@@ -154,11 +159,11 @@ export const ProductPageUI = ({ logic }: ProductPageUIProps) => {
                           size="sm"
                           disabled={!isAvailable}
                           onClick={() => logic.handleOptionSelect(option.name, value)}
-                          className={!isAvailable ? "opacity-50 cursor-not-allowed" : ""}
+                          className={`font-bold ${!isAvailable ? "opacity-50 cursor-not-allowed" : ""}`}
                         >
                           {value}
                           {!isAvailable && (
-                            <span className="ml-1 text-xs">(Out of stock)</span>
+                            <span className="ml-1 text-xs">(Agotado)</span>
                           )}
                         </Button>
                       )
@@ -172,8 +177,8 @@ export const ProductPageUI = ({ logic }: ProductPageUIProps) => {
           {/* Quantity and Add to Cart */}
           <div className="space-y-4">
             <div className="flex items-center space-x-4">
-              <Label htmlFor="quantity" className="text-base font-medium">
-                Quantity
+              <Label htmlFor="quantity" className="text-base font-bold">
+                Cantidad
               </Label>
               <div className="flex items-center space-x-2">
                 <Button
@@ -206,15 +211,15 @@ export const ProductPageUI = ({ logic }: ProductPageUIProps) => {
               <Button
                 onClick={logic.handleAddToCart}
                 disabled={!logic.inStock}
-                className="flex-1"
+                className="flex-1 font-black text-lg h-14"
                 size="lg"
               >
-                <ShoppingCart className="mr-2 h-4 w-4" />
-                {logic.inStock ? 'Add to cart' : 'Out of stock'}
+                <ShoppingCart className="mr-2 h-5 w-5" />
+                {logic.inStock ? 'AGREGAR AL CARRITO' : 'AGOTADO'}
               </Button>
               
               {!logic.inStock && (
-                <Badge variant="secondary">Out of stock</Badge>
+                <Badge variant="secondary" className="font-bold">AGOTADO</Badge>
               )}
             </div>
           </div>
@@ -223,14 +228,14 @@ export const ProductPageUI = ({ logic }: ProductPageUIProps) => {
           {logic.matchingVariant && (
             <Card>
               <CardContent className="pt-6">
-                <h3 className="font-semibold mb-2">Product information</h3>
+                <h3 className="font-black mb-3">INFORMACIÓN DEL PRODUCTO</h3>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <div className="flex justify-between">
-                    <span>SKU:</span>
+                    <span className="font-bold">SKU:</span>
                     <span>{logic.matchingVariant.sku || 'N/A'}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>Available stock:</span>
+                    <span className="font-bold">Stock disponible:</span>
                     <span>{logic.matchingVariant.inventory_quantity || 0}</span>
                   </div>
                 </div>
@@ -243,10 +248,10 @@ export const ProductPageUI = ({ logic }: ProductPageUIProps) => {
           <Button
             variant="outline"
             onClick={logic.handleNavigateBack}
-            className="w-full"
+            className="w-full font-bold"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Continue shopping
+            SEGUIR COMPRANDO
           </Button>
         </div>
       </div>
